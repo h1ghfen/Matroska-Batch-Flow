@@ -1,3 +1,43 @@
+## 🐧 Linux Support — Now Available!
+
+**Matroska Batch Flow now supports Linux!**
+
+This fork introduces a Linux desktop version built with **Uno Platform and .NET 10**, distributed as a portable **AppImage**.
+
+### Download for Linux
+
+**[Download the latest Linux release](https://github.com/h1ghfen/Matroska-Batch-Flow/releases/latest)**
+
+> **Note:** During the prerelease phase, download the Linux AppImage from [GitHub Releases](https://github.com/h1ghfen/Matroska-Batch-Flow/releases).
+
+### Installation
+
+1. Install **MKVToolNix** using your distribution's package manager.
+2. Download `Matroska-Batch-Flow-x86_64.AppImage`.
+3. Make the AppImage executable and launch it:
+
+```bash
+chmod +x Matroska-Batch-Flow-x86_64.AppImage
+./Matroska-Batch-Flow-x86_64.AppImage
+```
+
+### Linux Features
+
+- Native Linux desktop interface using Uno Platform
+- Batch editing of MKV metadata
+- Video, audio, and subtitle track management
+- Track language selection
+- Multilingual interface
+- Portable x86_64 AppImage
+
+**Status:** Linux preview — tested on Arch Linux (Ryoku). Additional distribution testing is planned.
+
+---
+
+
+
+
+
 <h1 align="center">
   <a href="https://github.com/TimGels/Matroska-Batch-Flow">
     <img src="Assets/Logo-Medium.png" width="200" alt="Matroska Batch Flow Logo">
