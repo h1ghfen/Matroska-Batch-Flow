@@ -1,0 +1,77 @@
+
+name: Linux AppImage
+
+on:
+  push:
+    branches:
+      - feature/linux-appimage
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Install native dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libfuse2t64 \
+            libmediainfo0v5 \
+            mediainfo \
+            mkvtoolnix \
+            file \
+            wget
+
+      - name: Publish Linux application
+        run: |
+          dotnet publish \
+            src/MatroskaBatchFlow.Uno/MatroskaBatchFlow.Uno.csproj \
+            -f net10.0-desktop \
+            -c Release \
+            -r linux-x64 \
+            --self-contained true \
+            -p:TargetPlatformSupported=true \
+            -o ./publish/linux-x64
+
+      - name: Download appimagetool
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          wget -q \
+            https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage \
+            -O "$HOME/.local/bin/appimagetool"
+          chmod +x "$HOME/.local/bin/appimagetool"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Build AppImage
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+        run: |
+          ./packaging/linux/build-appimage.sh
+
+      - name: Verify AppImage
+        run: |
+          test -s publish/Matroska-Batch-Flow-x86_64.AppImage
+          file publish/Matroska-Batch-Flow-x86_64.AppImage
+          sha256sum publish/Matroska-Batch-Flow-x86_64.AppImage
+
+      - name: Upload AppImage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Matroska-Batch-Flow-Linux-x86_64
+          path: publish/Matroska-Batch-Flow-x86_64.AppImage
+          retention-days: 30
+          if-no-files-found: error
