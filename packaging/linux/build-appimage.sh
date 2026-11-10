@@ -67,9 +67,7 @@ if ! command -v appimagetool >/dev/null 2>&1; then
     exit 1
 fi
 
-ARCH=x86_64 appimagetool \
-  --comp lz4 \
-  "$APPDIR" "$OUTPUT"
+ARCH=x86_64 appimagetool "$APPDIR" "$OUTPUT"
 
 echo
 echo "AppImage created:"
