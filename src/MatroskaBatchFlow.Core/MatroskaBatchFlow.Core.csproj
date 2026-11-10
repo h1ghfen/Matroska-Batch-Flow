@@ -27,11 +27,13 @@
         <Content Include="Binaries\libmediainfo.so">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="Binaries\MediaInfo.dll">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <Content Include="Binaries\MediaInfo.dll"
+                 Condition="'$(RuntimeIdentifier)' != 'linux-x64'">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="Binaries\mkvpropedit.exe">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <Content Include="Binaries\mkvpropedit.exe"
+                 Condition="'$(RuntimeIdentifier)' != 'linux-x64'">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 
